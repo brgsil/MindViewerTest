@@ -1,0 +1,36 @@
+plugins {
+  	id 'jacoco'
+  	id 'maven'
+        id 'application'
+}
+
+
+mainClassName = 'MindViewerTest.Main'
+
+repositories {
+    flatDir {
+        dirs 'libs'
+        dirs '../cst/build/libs'
+    }
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+   //implementation ':cst:0.5.1-full'
+   implementation 'com.github.CST-Group:cst:0.6.1'
+   //implementation group: 'org.jfree', name: 'jfreechart', version: '1.0.19'
+}
+
+task uberJar(type: Jar) {
+    archiveClassifier = 'full'
+    from sourceSets.main.output
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+    }
+}
+artifacts
+{
+    archives uberJar
+}
