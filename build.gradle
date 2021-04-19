@@ -17,13 +17,18 @@ repositories {
 }
 
 dependencies {
-   //implementation ':cst:0.5.1-full'
    implementation 'com.github.CST-Group:cst:0.6.1'
-   //implementation group: 'org.jfree', name: 'jfreechart', version: '1.0.19'
+   implementation group: 'org.jfree', name: 'jfreechart', version: '1.0.19'
 }
 
 task uberJar(type: Jar) {
     archiveClassifier = 'full'
+    manifest {
+      attributes(
+        'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+        'Main-Class': mainClassName
+      )
+    }
     from sourceSets.main.output
     dependsOn configurations.runtimeClasspath
     from {
