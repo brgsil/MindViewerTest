@@ -2,8 +2,8 @@ plugins {
   	id 'jacoco'
   	id 'maven'
         id 'application'
+        id 'java-library'
 }
-
 
 mainClassName = 'MindViewerTest.Main'
 
@@ -14,11 +14,13 @@ repositories {
     }
     jcenter()
     mavenCentral()
+    maven { 
+    	url 'https://jitpack.io'
+    }
 }
 
 dependencies {
-   implementation 'com.github.CST-Group:cst:0.6.1'
-   implementation group: 'org.jfree', name: 'jfreechart', version: '1.0.19'
+   api 'com.github.CST-Group:cst:0.6.1'
 }
 
 task uberJar(type: Jar) {
