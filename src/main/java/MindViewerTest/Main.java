@@ -10,7 +10,7 @@ import br.unicamp.cst.core.entities.Memory;
 import br.unicamp.cst.core.entities.MemoryContainer;
 import br.unicamp.cst.core.entities.MemoryObject;
 import br.unicamp.cst.core.entities.Mind;
-import br.unicamp.cst.util.MindViewer;
+import br.unicamp.cst.util.viewer.MindViewer;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -92,14 +92,23 @@ public class Main {
         m.createCodeletGroup("Behavioral");
         m.createCodeletGroup("Motivational");
         m.createCodeletGroup("Motor");
+        m.createMemoryGroup("StandardMemories");
+        m.createMemoryGroup("Containers");
         
         MemoryObject m1 = m.createMemoryObject("M1", 1.12);
+        m.registerMemory(m1,"StandardMemories");
         MemoryObject m2 = m.createMemoryObject("M2", 2.32);
+        m.registerMemory(m2,"StandardMemories");
         MemoryObject m3 = m.createMemoryObject("M3", 3.44);
+        m.registerMemory(m3,"StandardMemories");
         MemoryObject m4 = m.createMemoryObject("M4", 4.52);
+        m.registerMemory(m4,"StandardMemories");
         MemoryObject m5 = m.createMemoryObject("M5", 5.12);
+        m.registerMemory(m5,"StandardMemories");
         MemoryContainer m6 = m.createMemoryContainer("C1");
+        m.registerMemory(m6,"Containers");
         MemoryContainer m7 = m.createMemoryContainer("C2");
+        m.registerMemory(m7,"Containers");
         int mc1 = m7.setI(7.55, 0.23);
         int mc2 = m6.setI(6.33, 0.22);
         int mc3 = m6.setI(6.12, 0.13);
@@ -140,18 +149,6 @@ public class Main {
     }
     
 private void createAndShowGUI(Mind m) {
-//        //Create and set up the window.
-//        JFrame frame = new JFrame("New Mind Viewer");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//        //Create and set up the content pane.
-//        MindPanel newContentPane = new MindPanel(m);
-//        newContentPane.setOpaque(true); //content panes must be opaque
-//        frame.setContentPane(newContentPane);
-//
-//        //Display the window.
-//        frame.pack();
-//        frame.setVisible(true);
         MindViewer mv = new MindViewer(m,"MindViewer",m.getCodeletGroupList("Motor"));
         mv.setVisible(true);
     }   
@@ -164,8 +161,6 @@ public Main() {
     public static void main(String[] args) {
         Main mainApp = new Main();
         mainApp.StartTimer();
-    	//MindViewer ov = new MindViewer(m, "Mind", new ArrayList<>());
-        //ov.setVisible(true);
     }
     
 }

@@ -1,8 +1,5 @@
 plugins {
-  	id 'jacoco'
-  	id 'maven'
         id 'application'
-        id 'java-library'
 }
 
 mainClassName = 'MindViewerTest.Main'
@@ -14,20 +11,29 @@ repositories {
     }
     jcenter()
     mavenCentral()
+    maven {
+        url "https://github.com/rosjava/rosjava_mvn_repo/raw/master"
+    }
+    maven {
+        url "https://repository.springsource.com/maven/bundles/release"
+    }
+    maven {
+        url "https://repository.springsource.com/maven/bundles/external"
+    }
     maven { 
     	url 'https://jitpack.io'
     }
 }
 
 dependencies {
-   api 'com.github.CST-Group:cst:0.6.1'
+   implementation 'com.github.CST-Group:cst-desktop:1.0.3'
 }
 
-task uberJar(type: Jar) {
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     archiveClassifier = 'full'
     manifest {
       attributes(
-        'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
         'Main-Class': mainClassName
       )
     }
@@ -36,8 +42,8 @@ task uberJar(type: Jar) {
     from {
         configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
     }
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
 }
-artifacts
-{
-    archives uberJar
-}
+
+
+
