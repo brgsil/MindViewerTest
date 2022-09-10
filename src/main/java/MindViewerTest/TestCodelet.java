@@ -5,18 +5,21 @@ package MindViewerTest;
 
 import br.unicamp.cst.core.entities.Codelet;
 import br.unicamp.cst.core.exceptions.CodeletActivationBoundsException;
+import br.unicamp.cst.util.viewer.Inspectable;
 
 /**
  * 
  * @author gudwin
  *
  */
-public class TestCodelet extends Codelet{
+public class TestCodelet extends Codelet implements Inspectable{
     
         boolean ascending = true;
+        CustomView customView;
 
 	public TestCodelet(String name) {
 		setName(name);
+                customView = new CustomView();
 	}
 
 	@Override
@@ -32,6 +35,7 @@ public class TestCodelet extends Codelet{
                     setActivation(getActivation()+0.1);
                 } catch (CodeletActivationBoundsException e) {
                     ascending = !ascending;
+                    customView.updateInfo(ascending);
                 }
             }
             else {
@@ -39,6 +43,7 @@ public class TestCodelet extends Codelet{
                     setActivation(getActivation()-0.1);
                 } catch (CodeletActivationBoundsException e) {
                     ascending = !ascending;
+                    customView.updateInfo(ascending);
                 }
             }
 	}
@@ -47,5 +52,11 @@ public class TestCodelet extends Codelet{
 	public void proc() {
 		
 	}
+
+        @Override
+        public void inspect() {
+            customView.setVisible(true);
+
+        }
 
 }
